@@ -18,18 +18,19 @@
 .about-me h3 {
   font-size: 25px;
   text-transform: uppercase;
-  letter-spacing: 7px;
+  letter-spacing: 2px;
+  word-spacing: normal;
   font-weight: 400;
   color: var(--accentColor);
+  width: auto;
 }
-
-.about-me p {
+.about-me .about-para {
   font-size: 33px;
-  font-weight: 600;
+  font-weight: 500;
   line-height: 36px;
-  letter-spacing: 1px;
+  letter-spacing: 0.5px;
+  word-spacing: normal;
 }
-
 @media only screen and (min-width: 600px) {
   .about-section {
     justify-content: center;
@@ -63,7 +64,7 @@
     line-height: 2.3vw;
   }
 }
-@media only screen and (min-width: 1950px) {
+@media only screen and (min-width: 1025px) {
   .about-me p {
     font-size: 2.5rem;
     line-height: 2.7rem;

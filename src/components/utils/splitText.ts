@@ -1,38 +1,40 @@
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { ScrollSmoother } from "gsap-trial/ScrollSmoother";
-import { SplitText } from "gsap-trial/SplitText";
+
+gsap.registerPlugin(ScrollTrigger);
 
 interface ParaElement extends HTMLElement {
   anim?: gsap.core.Animation;
-  split?: SplitText;
 }
 
-gsap.registerPlugin(ScrollTrigger, ScrollSmoother, SplitText);
+function splitIntoSpans(el: HTMLElement, type: "words" | "chars"): HTMLElement[] {
+  const text = el.innerText;
+  el.innerHTML = "";
+  const items = type === "words" ? text.split(" ") : text.split("");
+  return items.map((item) => {
+    const span = document.createElement("span");
+    span.textContent = type === "words" ? item + " " : item;
+    span.style.display = "inline-block";
+    el.appendChild(span);
+    return span;
+  });
+}
 
 export default function setSplitText() {
   ScrollTrigger.config({ ignoreMobileResize: true });
   if (window.innerWidth < 900) return;
+
   const paras: NodeListOf<ParaElement> = document.querySelectorAll(".para");
   const titles: NodeListOf<ParaElement> = document.querySelectorAll(".title");
-
   const TriggerStart = window.innerWidth <= 1024 ? "top 60%" : "20% 60%";
   const ToggleAction = "play pause resume reverse";
 
   paras.forEach((para: ParaElement) => {
     para.classList.add("visible");
-    if (para.anim) {
-      para.anim.progress(1).kill();
-      para.split?.revert();
-    }
-
-    para.split = new SplitText(para, {
-      type: "lines,words",
-      linesClass: "split-line",
-    });
-
+    if (para.anim) para.anim.progress(1).kill();
+    const words = splitIntoSpans(para, "words");
     para.anim = gsap.fromTo(
-      para.split.words,
+      words,
       { autoAlpha: 0, y: 80 },
       {
         autoAlpha: 1,
@@ -48,17 +50,12 @@ export default function setSplitText() {
       }
     );
   });
+
   titles.forEach((title: ParaElement) => {
-    if (title.anim) {
-      title.anim.progress(1).kill();
-      title.split?.revert();
-    }
-    title.split = new SplitText(title, {
-      type: "chars,lines",
-      linesClass: "split-line",
-    });
+    if (title.anim) title.anim.progress(1).kill();
+    const chars = splitIntoSpans(title, "chars");
     title.anim = gsap.fromTo(
-      title.split.chars,
+      chars,
       { autoAlpha: 0, y: 80, rotate: 10 },
       {
         autoAlpha: 1,

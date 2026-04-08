@@ -10,21 +10,21 @@ const Contact = () => {
           <div className="contact-box">
             <h4>Email</h4>
             <p>
-              <a href="mailto:example@mail.com" data-cursor="disable">
-                example@mail.com
+              <a href="mailto:fahad.ikram26@gmail.com" data-cursor="disable">
+                fahad.ikram26@gmail.com
               </a>
             </p>
             <h4>Phone</h4>
             <p>
-              <a href="tel:+9199999999" data-cursor="disable">
-                +91 99999 99999
+              <a href="tel:+923216902785" data-cursor="disable">
+                +92 321 690 2785
               </a>
             </p>
           </div>
           <div className="contact-box">
             <h4>Social</h4>
             <a
-              href="https://github.com"
+              href="https://github.com/fahadikr"
               target="_blank"
               data-cursor="disable"
               className="contact-social"
@@ -32,7 +32,7 @@ const Contact = () => {
               Github <MdArrowOutward />
             </a>
             <a
-              href="https://www.linkedin.com"
+              href="https://www.linkedin.com/in/fahad-ikram-96b183274"
               target="_blank"
               data-cursor="disable"
               className="contact-social"
@@ -40,7 +40,7 @@ const Contact = () => {
               Linkedin <MdArrowOutward />
             </a>
             <a
-              href="https://x.com"
+              href="https://www.linkedin.com/in/fahad-ikram-96b183274"
               target="_blank"
               data-cursor="disable"
               className="contact-social"
@@ -48,21 +48,13 @@ const Contact = () => {
               Twitter <MdArrowOutward />
             </a>
             <a
-              href="https://www.instagram.com"
+              href="https://github.com/fahadikr"
               target="_blank"
               data-cursor="disable"
               className="contact-social"
             >
               Instagram <MdArrowOutward />
             </a>
-          </div>
-          <div className="contact-box">
-            <h2>
-              Designed and Developed <br /> by <span>Moncy Yohannan</span>
-            </h2>
-            <h5>
-              <MdCopyright /> 2024
-            </h5>
           </div>
         </div>
       </div>
