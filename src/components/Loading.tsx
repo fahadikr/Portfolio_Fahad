@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import "./styles/Loading.css";
 import { useLoading } from "../context/LoadingProvider";
+import { prepareFX, initialFX } from "./utils/initialFX";
 
 import Marquee from "react-fast-marquee";
 
@@ -10,27 +11,25 @@ const Loading = ({ percent }: { percent: number }) => {
   const [isLoaded, setIsLoaded] = useState(false);
   const [clicked, setClicked] = useState(false);
 
-  if (percent >= 100) {
-    setTimeout(() => {
+  useEffect(() => {
+    if (percent < 100) return;
+    const t1 = setTimeout(() => {
       setLoaded(true);
-      setTimeout(() => {
-        setIsLoaded(true);
-      }, 1000);
+      prepareFX();
+      const t2 = setTimeout(() => setIsLoaded(true), 300);
+      return () => clearTimeout(t2);
     }, 600);
-  }
+    return () => clearTimeout(t1);
+  }, [percent]);
 
   useEffect(() => {
-    import("./utils/initialFX").then((module) => {
-      if (isLoaded) {
-        setClicked(true);
-        setTimeout(() => {
-          if (module.initialFX) {
-            module.initialFX();
-          }
-          setIsLoading(false);
-        }, 900);
-      }
-    });
+    if (!isLoaded) return;
+    setClicked(true);
+    const t = setTimeout(() => {
+      initialFX();
+      setIsLoading(false);
+    }, 900);
+    return () => clearTimeout(t);
   }, [isLoaded]);
 
   function handleMouseMove(e: React.MouseEvent<HTMLElement>) {

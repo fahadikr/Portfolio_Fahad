@@ -83,7 +83,7 @@
 .what-content-in {
   opacity: 0;
   animation: whatFlicker 0.5s 1 forwards;
-  animation-delay: 1s;
+  animation-delay: 0.2s;
 }
 @keyframes whatFlicker {
   0%,

@@ -1,79 +1,92 @@
 import "./styles/Work.css";
 import WorkImage from "./WorkImage";
-import gsap from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { useEffect } from "react";
+import { useState } from "react";
 
-gsap.registerPlugin(ScrollTrigger);
+const projects = [
+  { num: "01", title: "Road Safety Audit Framework", category: "Final Year Project", tools: "GIS, Python, Dashcam Imagery, ML", image: "/images/fyp.webp" },
+  { num: "02", title: "Open Channel Canal System", category: "Hydraulic Design", tools: "AutoCAD, Civil-3D, Irrigation Design", image: "/images/2.webp" },
+  { num: "03", title: "Intersection & Signal Timing", category: "Traffic Engineering", tools: "SIDRA, Synchro Traffic, Yolov8", image: "/images/3.webp" },
+  { num: "04", title: "Cafe Renovation Project", category: "Project Management", tools: "Primavera P6, BOQ, Cost Estimation", image: "/images/4.webp" },
+  { num: "05", title: "Marshall Mix Design", category: "Pavement Engineering", tools: "Lab Testing, ASTM Standards", image: "/images/5.webp" },
+  { num: "06", title: "Sustainable Multi-Storey Building", category: "Structural Design", tools: "AutoCAD, Revit, Etabs", image: "/images/6.webp" },
+];
+
+const ChevronLeft = () => (
+  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+    <polyline points="15 18 9 12 15 6" />
+  </svg>
+);
+
+const ChevronRight = () => (
+  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+    <polyline points="9 18 15 12 9 6" />
+  </svg>
+);
 
 const Work = () => {
-  useEffect(() => {
-    let translateX: number = 0;
-    function setTranslateX() {
-      const box = document.getElementsByClassName("work-box");
-      const rectLeft = document
-        .querySelector(".work-container")!
-        .getBoundingClientRect().left;
-      const rect = box[0].getBoundingClientRect();
-      const parentWidth = box[0].parentElement!.getBoundingClientRect().width;
-      let padding: number =
-        parseInt(window.getComputedStyle(box[0]).padding) / 2;
-      translateX = rect.width * box.length - (rectLeft + parentWidth) + padding;
-    }
-    setTranslateX();
+  const [current, setCurrent] = useState(0);
 
-    let timeline = gsap.timeline({
-      scrollTrigger: {
-        trigger: ".work-section",
-        start: "top top",
-        end: `+=${translateX}`,
-        scrub: true,
-        pin: true,
-        id: "work",
-      },
-    });
-
-    timeline.to(".work-flex", {
-      x: -translateX,
-      ease: "none",
-    });
-
-    return () => {
-      timeline.kill();
-      ScrollTrigger.getById("work")?.kill();
-    };
-  }, []);
+  const prev = () => setCurrent((c) => Math.max(0, c - 1));
+  const next = () => setCurrent((c) => Math.min(projects.length - 1, c + 1));
 
   return (
     <div className="work-section" id="work">
       <div className="work-container section-container">
-        <h2>
-          My <span>Projects</span>
-        </h2>
-        <div className="work-flex">
-          {[
-            { num: "01", title: "Road Safety Audit Framework", category: "Final Year Project", tools: "GIS, Python, Dashcam Imagery, ML", image: "/images/fyp.webp" },
-            { num: "02", title: "Open Channel Canal System", category: "Hydraulic Design", tools: "AutoCAD, Civil-3D, Irrigation Design", image: "/images/2.webp" },
-            { num: "03", title: "Intersection & Signal Timing", category: "Traffic Engineering", tools: "SIDRA, Synchro Traffic, Yolov8", image: "/images/3.webp" },
-            { num: "04", title: "Cafe Renovation Project", category: "Project Management", tools: "Primavera P6, BOQ, Cost Estimation", image: "/images/4.webp" },
-            { num: "05", title: "Marshall Mix Design", category: "Pavement Engineering", tools: "Lab Testing, ASTM Standards", image: "/images/5.webp" },
-            { num: "06", title: "Sustainable Multi-Storey Building", category: "Structural Design", tools: "AutoCAD, Revit, Etabs", image: "/images/6.webp" },
-          ].map((project) => (
-            <div className="work-box" key={project.num}>
-              <div className="work-info">
-                <div className="work-title">
-                  <h3>{project.num}</h3>
-                  <div>
-                    <h4>{project.title}</h4>
-                    <p>{project.category}</p>
+        <div className="work-header">
+          <h2>
+            My <span>Projects</span>
+          </h2>
+          <div className="work-arrows">
+            <button
+              className="work-arrow"
+              onClick={prev}
+              disabled={current === 0}
+              aria-label="Previous project"
+            >
+              <ChevronLeft />
+            </button>
+            <span className="work-counter">
+              {String(current + 1).padStart(2, "0")} /{" "}
+              {String(projects.length).padStart(2, "0")}
+            </span>
+            <button
+              className="work-arrow"
+              onClick={next}
+              disabled={current === projects.length - 1}
+              aria-label="Next project"
+            >
+              <ChevronRight />
+            </button>
+          </div>
+        </div>
+
+        <div className="work-overflow">
+          <div
+            className="work-flex"
+            style={{ transform: `translateX(calc(${current} * -100%))` }}
+          >
+            {projects.map((project) => (
+              <div className="work-box" key={project.num}>
+                <div className="work-info">
+                  <div className="work-title">
+                    <h3>{project.num}</h3>
+                    <div>
+                      <h4>{project.title}</h4>
+                      <p>{project.category}</p>
+                    </div>
+                  </div>
+                  <div className="work-tools">
+                    <h4>Tools and features</h4>
+                    <p>{project.tools}</p>
                   </div>
                 </div>
-                <h4>Tools and features</h4>
-                <p>{project.tools}</p>
+                <WorkImage
+                  image={project.image || "/images/placeholder.webp"}
+                  alt={project.title}
+                />
               </div>
-              <WorkImage image={project.image || "/images/placeholder.webp"} alt={project.title} />
-            </div>
-          ))}
+            ))}
+          </div>
         </div>
       </div>
     </div>

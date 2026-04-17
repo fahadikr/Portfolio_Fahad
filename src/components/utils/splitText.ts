@@ -20,6 +20,8 @@ function splitIntoSpans(el: HTMLElement, type: "words" | "chars"): HTMLElement[]
   });
 }
 
+let refreshListenerAdded = false;
+
 export default function setSplitText() {
   ScrollTrigger.config({ ignoreMobileResize: true });
   if (window.innerWidth < 900) return;
@@ -73,5 +75,8 @@ export default function setSplitText() {
     );
   });
 
-  ScrollTrigger.addEventListener("refresh", () => setSplitText());
+  if (!refreshListenerAdded) {
+    ScrollTrigger.addEventListener("refresh", () => setSplitText());
+    refreshListenerAdded = true;
+  }
 }
