@@ -52,12 +52,12 @@ const Work = () => {
         </h2>
         <div className="work-flex">
           {[
-            { num: "01", title: "Road Safety Audit Framework", category: "Final Year Project", tools: "GIS, Python, Dashcam Imagery, ML", image: "/images/fyp.png" },
-            { num: "02", title: "Open Channel Canal System", category: "Hydraulic Design", tools: "AutoCAD, Civil-3D, Irrigation Design", image: "/images/2.png" },
-            { num: "03", title: "Intersection & Signal Timing", category: "Traffic Engineering", tools: "SIDRA, Synchro Traffic, Yolov8", image: "/images/3.png" },
-            { num: "04", title: "Cafe Renovation Project", category: "Project Management", tools: "Primavera P6, BOQ, Cost Estimation", image: "/images/4.png" },
-            { num: "05", title: "Marshall Mix Design", category: "Pavement Engineering", tools: "Lab Testing, ASTM Standards", image: "/images/5.jpg" },
-            { num: "06", title: "Sustainable Multi-Storey Building", category: "Structural Design", tools: "AutoCAD, Revit, Etabs", image: "/images/6.png" },
+            { num: "01", title: "Road Safety Audit Framework", category: "Final Year Project", tools: "GIS, Python, Dashcam Imagery, ML", image: "/images/fyp.web" },
+            { num: "02", title: "Open Channel Canal System", category: "Hydraulic Design", tools: "AutoCAD, Civil-3D, Irrigation Design", image: "/images/2.web" },
+            { num: "03", title: "Intersection & Signal Timing", category: "Traffic Engineering", tools: "SIDRA, Synchro Traffic, Yolov8", image: "/images/3.web" },
+            { num: "04", title: "Cafe Renovation Project", category: "Project Management", tools: "Primavera P6, BOQ, Cost Estimation", image: "/images/4.web" },
+            { num: "05", title: "Marshall Mix Design", category: "Pavement Engineering", tools: "Lab Testing, ASTM Standards", image: "/images/5.web" },
+            { num: "06", title: "Sustainable Multi-Storey Building", category: "Structural Design", tools: "AutoCAD, Revit, Etabs", image: "/images/6.web" },
           ].map((project) => (
             <div className="work-box" key={project.num}>
               <div className="work-info">
