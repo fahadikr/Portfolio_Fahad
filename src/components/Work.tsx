@@ -1,6 +1,6 @@
 import "./styles/Work.css";
 import WorkImage from "./WorkImage";
-import { useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 
 const projects = [
   { num: "01", title: "Road Safety Audit Framework", category: "Final Year Project", tools: "GIS, Python, Dashcam Imagery, ML", image: "/images/fyp.webp" },
@@ -25,9 +25,44 @@ const ChevronRight = () => (
 
 const Work = () => {
   const [current, setCurrent] = useState(0);
+  const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
+  const overflowRef = useRef<HTMLDivElement>(null);
 
-  const prev = () => setCurrent((c) => Math.max(0, c - 1));
-  const next = () => setCurrent((c) => Math.min(projects.length - 1, c + 1));
+  useEffect(() => {
+    const check = () => setIsMobile(window.innerWidth < 768);
+    window.addEventListener("resize", check);
+    return () => window.removeEventListener("resize", check);
+  }, []);
+
+  // Keep counter in sync with native scroll on mobile
+  const handleScroll = useCallback(() => {
+    if (!overflowRef.current || !isMobile) return;
+    const { scrollLeft, offsetWidth } = overflowRef.current;
+    const idx = Math.round(scrollLeft / offsetWidth);
+    setCurrent(Math.max(0, Math.min(projects.length - 1, idx)));
+  }, [isMobile]);
+
+  const prev = () => {
+    if (isMobile && overflowRef.current) {
+      overflowRef.current.scrollTo({
+        left: Math.max(0, current - 1) * overflowRef.current.offsetWidth,
+        behavior: "smooth",
+      });
+    } else {
+      setCurrent((c) => Math.max(0, c - 1));
+    }
+  };
+
+  const next = () => {
+    if (isMobile && overflowRef.current) {
+      overflowRef.current.scrollTo({
+        left: Math.min(projects.length - 1, current + 1) * overflowRef.current.offsetWidth,
+        behavior: "smooth",
+      });
+    } else {
+      setCurrent((c) => Math.min(projects.length - 1, c + 1));
+    }
+  };
 
   return (
     <div className="work-section" id="work">
@@ -60,10 +95,14 @@ const Work = () => {
           </div>
         </div>
 
-        <div className="work-overflow">
+        <div
+          className="work-overflow"
+          ref={overflowRef}
+          onScroll={handleScroll}
+        >
           <div
             className="work-flex"
-            style={{ transform: `translateX(calc(${current} * -100%))` }}
+            style={isMobile ? undefined : { transform: `translateX(calc(${current} * -100%))` }}
           >
             {projects.map((project) => (
               <div className="work-box" key={project.num}>

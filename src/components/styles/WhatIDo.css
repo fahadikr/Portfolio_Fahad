@@ -385,6 +385,46 @@
     margin: 0;
   }
 }
+
+/* ── Mobile: both cards fully expanded by default, no chevron ── */
+@media only screen and (max-width: 767px) {
+  /* Force the box-in visible regardless of GSAP display:none */
+  .what-box-in {
+    display: flex !important;
+    height: auto !important;
+  }
+
+  .what-box:last-child {
+    height: auto;
+  }
+
+  /* Each card fully expanded — no click-to-reveal needed */
+  .what-content {
+    min-height: auto !important;
+    height: auto !important;
+    padding: 24px 20px !important;
+    width: 100% !important;
+  }
+
+  /* Keep sibling from collapsing when one card is tapped */
+  .what-content.what-sibling {
+    min-height: auto !important;
+    padding: 24px 20px !important;
+    opacity: 1;
+  }
+
+  /* Always show description, tags, and label */
+  .what-content h5,
+  .what-content-flex,
+  .what-content p {
+    opacity: 1 !important;
+  }
+
+  /* Hide the expand/collapse chevron arrow */
+  .what-arrow {
+    display: none;
+  }
+}
 @media only screen and (min-width: 1950px) {
   .what-box h2 {
     font-size: 7rem;

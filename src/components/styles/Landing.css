@@ -340,6 +340,91 @@
 }
 
 /* =============================================
+   RESPONSIVE — MOBILE (max 767px) — stacked layout
+   ============================================= */
+@media screen and (max-width: 767px) {
+  .landing-section {
+    height: var(--vh);
+    overflow: hidden;
+  }
+
+  /* Stack text vertically at top, leave bottom half for character */
+  .landing-container {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-start;
+    height: auto;
+    padding-top: 72px;
+    gap: 14px;
+  }
+
+  /* Override absolute positioning so items flow normally */
+  .landing-intro {
+    position: static;
+    transform: none;
+    top: auto;
+    left: auto;
+    right: auto;
+  }
+
+  .landing-info {
+    position: static;
+    transform: none;
+    right: auto;
+    bottom: auto;
+    top: auto;
+    text-align: left;
+  }
+
+  /* Remove the hard dark-gradient box behind ENGINEER — this is the
+     "black rectangle" that cuts across the 3D character on mobile */
+  .landing-info-h2::after {
+    display: none;
+  }
+
+  /* Soft text-shadow for readability instead of the hard box */
+  .landing-intro h1,
+  .landing-intro h2,
+  .landing-info h3,
+  .landing-info-foreground div {
+    text-shadow: 0 2px 16px rgba(0, 0, 0, 0.9);
+  }
+
+  /* Shrink the CIVIL / ENGINEER title so it fits without crowding */
+  .landing-info-foreground,
+  .landing-info-h2 {
+    font-size: 28px;
+  }
+
+  .landing-info h3 {
+    font-size: 16px;
+  }
+
+  .landing-intro h2 {
+    font-size: 16px;
+  }
+
+  .landing-intro h1 {
+    font-size: 26px;
+    line-height: 26px;
+  }
+
+  .landing-descriptor--visible {
+    font-size: 11px;
+    letter-spacing: 2px;
+    margin-top: 10px;
+  }
+
+  /* Character sits in the bottom ~50 % of the hero — text lives above it */
+  .character-model {
+    height: 52vh;
+    bottom: 0;
+    z-index: 0;
+  }
+}
+
+/* =============================================
    RESPONSIVE — 500px+
    ============================================= */
 @media screen and (min-width: 500px) {

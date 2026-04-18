@@ -129,6 +129,19 @@ export function setCharTimeline(
   }
 }
 export function setAllTimeline() {
+  const isMobile = window.innerWidth < 768;
+
+  if (isMobile) {
+    // scrub:true ties opacity to scroll progress — on mobile the section
+    // may never reach the end trigger, leaving content at near-zero opacity.
+    // Skip the fade entirely and show everything immediately.
+    gsap.set(".career-info-box", { opacity: 1 });
+    gsap.set(".career-timeline", { maxHeight: "100%", opacity: 1 });
+    gsap.set(".education-info-box", { opacity: 1 });
+    gsap.set(".education-timeline", { maxHeight: "100%", opacity: 1 });
+    return;
+  }
+
   const careerTimeline = gsap.timeline({
     scrollTrigger: {
       trigger: ".career-section",
@@ -162,13 +175,6 @@ export function setAllTimeline() {
       ".career-section",
       { y: 0 },
       { y: "20%", duration: 0.5, delay: 0.2 },
-      0
-    );
-  } else {
-    careerTimeline.fromTo(
-      ".career-section",
-      { y: 0 },
-      { y: 0, duration: 0.5, delay: 0.2 },
       0
     );
   }
@@ -206,13 +212,6 @@ export function setAllTimeline() {
       ".education-section",
       { y: 0 },
       { y: "20%", duration: 0.5, delay: 0.2 },
-      0
-    );
-  } else {
-    educationTimeline.fromTo(
-      ".education-section",
-      { y: 0 },
-      { y: 0, duration: 0.5, delay: 0.2 },
       0
     );
   }

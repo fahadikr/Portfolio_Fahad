@@ -7,7 +7,9 @@ const WhatIDo = () => {
     containerRef.current[index] = el;
   };
   useEffect(() => {
-    if (ScrollTrigger.isTouch) {
+    // On tablets (touch + wide screen) enable tap-to-expand toggle.
+    // On phones (< 768px) the CSS already shows all content — no JS needed.
+    if (ScrollTrigger.isTouch && window.innerWidth >= 768) {
       containerRef.current.forEach((container) => {
         if (container) {
           container.classList.remove("what-noTouch");

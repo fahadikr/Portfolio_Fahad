@@ -271,3 +271,38 @@
   .work-title h3 { font-size: 40px; }
   .work-title > div h4 { font-size: 15px; }
 }
+
+/* ── Mobile: replace JS transform carousel with native CSS scroll-snap ── */
+@media only screen and (max-width: 767px) {
+  .work-overflow {
+    overflow-x: scroll;
+    overflow-y: hidden;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+    /* hide scrollbar */
+    scrollbar-width: none;
+  }
+  .work-overflow::-webkit-scrollbar {
+    display: none;
+  }
+
+  /* Disable the JS-driven transform on mobile */
+  .work-flex {
+    transform: none !important;
+  }
+
+  /* Each card snaps to the left edge and fills the container width */
+  .work-box {
+    scroll-snap-align: start;
+    flex-shrink: 0;
+    width: 100%;
+  }
+
+  /* Ensure arrow tap targets meet 44×44 px minimum */
+  .work-arrow {
+    min-width: 44px;
+    min-height: 44px;
+    width: 44px;
+    height: 44px;
+  }
+}
